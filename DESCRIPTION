@@ -1,0 +1,5 @@
+Package: randForest
+Type: Package
+Title: RandomForest Package for Binary Classification
+Version: 0.0.1.0
+RoxygenNote: 7.2.0
