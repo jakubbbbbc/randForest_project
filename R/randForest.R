@@ -75,23 +75,25 @@ stemp <- function(y, wt, x, parms, continuous)
 #' @param data Data frame containing the variables in the model.
 #' @param ntree Number of trees to grow. This should not be set to too small a number, to ensure that every input row gets predicted at least a few times.
 #' @param m_frac Probability for each variable to be randomly sampled as candidate at each split.
+#' @param minsplit The minimum number of observations that must exist in a node of a tree in order for a split to be attempted.
 #' @return A list of ntree 'rpart' objects.
 #' @examples 
 #' fit = randForest(target ~ ., data=df_train, ntree=50, m_frac=0.1)
 #' fit = randForest(satisfied ~ class + delay, data=planes, ntree=500, m_frac=0.5)
 #' @export
-randForest <- function(formula, data, ntree=50, m_frac=0.2){
+randForest <- function(formula, data, ntree=50, m_frac=0.2, minsplit=20){
   set.seed(0)
   fit_list = list()
 
   method_list = list(eval = etemp, split = stemp, init = itemp)
-  cat('Tree out of ', ntree, ':', sep='')
+  cat('\nTree out of ', ntree, ':', sep='')
   for (i in 1:ntree) {
-    cat(' ', i)
+    if (i %% (as.integer(ntree/10))==0 || ntree<10)
+      cat(' ', i)
     # create subset with replacement
     df = sample_frac(data, size = 1, replace = TRUE)
     # build tree with rpart and user split function
-    fit = rpart(formula, data=df, method = method_list, parms = list(m_frac=m_frac))
+    fit = rpart(formula, data=df, method=method_list, parms=list(m_frac=m_frac), control=list(minsplit=minsplit))
     # fit = rpart(formula=formula, method='anova', data=df)
     fit_list = c(fit_list, list(fit))
   }

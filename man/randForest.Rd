@@ -4,7 +4,7 @@
 \alias{randForest}
 \title{Binary Classification with Random Forest}
 \usage{
-randForest(formula, data, ntree = 50, m_frac = 0.2)
+randForest(formula, data, ntree = 50, m_frac = 0.2, minsplit = 20)
 }
 \arguments{
 \item{formula}{A data frame or a matrix of predictors, or a formula describing the model to be fitted.}
@@ -14,6 +14,8 @@ randForest(formula, data, ntree = 50, m_frac = 0.2)
 \item{ntree}{Number of trees to grow. This should not be set to too small a number, to ensure that every input row gets predicted at least a few times.}
 
 \item{m_frac}{Probability for each variable to be randomly sampled as candidate at each split.}
+
+\item{minsplit}{The minimum number of observations that must exist in a node of a tree in order for a split to be attempted.}
 }
 \value{
 A list of ntree 'rpart' objects.
