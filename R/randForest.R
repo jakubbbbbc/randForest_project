@@ -40,7 +40,7 @@ stemp <- function(y, wt, x, parms, continuous)
     lmean <- temp/left.wt
     rmean <- -temp/right.wt
     goodness <- (left.wt*lmean^2 + right.wt*rmean^2)/sum(wt*y^2)
-    if (prob<parms$m)
+    if (prob<parms$m_frac)
       return(list(goodness = goodness, direction = sign(lmean)))
     else
       return(list(goodness = double(length(goodness)), direction = sign(lmean)))
@@ -59,7 +59,7 @@ stemp <- function(y, wt, x, parms, continuous)
     right.wt <- sum(wt) - left.wt
     lmean <- temp/left.wt
     rmean <- -temp/right.wt
-    if (prob<parms$m)
+    if (prob<parms$m_frac)
       return(list(goodness= (left.wt*lmean^2 + right.wt*rmean^2)/sum(wt*y^2), direction = ux[ord]))
     else
       return(list(goodness = double(length(left.wt)), direction = ux[ord]))
